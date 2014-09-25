@@ -8,4 +8,4 @@
 
 ## Notion
 * The mail-send client has been tested only on `126.com`. So you need an email account at `126.com`. Otherwise you should edit the `smtp` server address within the code in `.py` file.
-* After you have edited `settings.config_template`, you should #save the file as# new one with the filename of `settings.config`
+* After you have edited `settings.config_template`, you should **save the file as** new one with the filename of `settings.config`
