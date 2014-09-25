@@ -12,7 +12,7 @@ import ConfigParser
 # noExpress = u'备货中'
 # hasExpress = u'已出库'
 
-def GetCookie(username, password)
+def GetCookie(username, password):
 	url = 'https://shop.bong.cn/shop/user/login'
 	body = {'password': password, 'loginName': username}
 	# print body
