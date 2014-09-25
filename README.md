@@ -1,2 +1,2 @@
 # Express Notification
-* This is the notification module of the query plan against bong.cn
+* This is the notification module of the express plan and the express status against bong.cn
