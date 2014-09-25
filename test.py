@@ -20,7 +20,7 @@ def Query(username, password):
 	url = 'https://shop.bong.cn/shop/user/login'
 	body = {'password': username, 'loginName': password}
 	# print body
-	headers = {'Content-type':'application/x-www-form-urlencoded; charset=UTF-8'), 
+	headers = {'Content-type':'application/x-www-form-urlencoded; charset=UTF-8', 
 				'Accept-Encoding':'gzip,deflate',
 				'Connection':'keep-alive',
 				'Content-Length':'39',
