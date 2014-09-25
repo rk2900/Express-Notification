@@ -11,12 +11,8 @@ import ConfigParser
 
 # noExpress = u'备货中'
 # hasExpress = u'已出库'
-# if txt.find(hasExpress) > 0 or txt.find(noExpress) < 0:
-# 	print True
-# if txt.find(noExpress) > 0:
-# 	print False
 
-def Query(username, password):
+def GetCookie(username, password)
 	url = 'https://shop.bong.cn/shop/user/login'
 	body = {'password': password, 'loginName': username}
 	# print body
@@ -30,15 +26,30 @@ def Query(username, password):
 	h = hl.Http()
 	response,content = h.request(url,'POST',headers=headers,body=urllib.urlencode(body))
 	cookie = response['set-cookie']
+	return cookie
 
+def Query(cookie, username, password):
+	h = hl.Http()
+	# cookie = GetCookie(username, password)
 	url = 'https://shop.bong.cn/shop/user/orders'
 	headers = {'Cookie':cookie}  
 	response, content = h.request(url, 'GET', headers=headers) 
-
 	soup = bs(content)
 	state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
+	
+	while not state:
+		print 'Getting cookie'
+		cookie = GetCookie(username, password)
+		print 'cookie is ' + cookie
+		headers = {'Cookie':cookie}  
+		response, content = h.request(url, 'GET', headers=headers) 
+		soup = bs(content)
+		state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
+		txt =  state.text
+		print 'state is ' + state.text
 	txt =  state.text
 	return txt
+		
 
 def SendMail(status, username, password, fromAddr, toAddr):
     msg = MIMEText(status,_subtype='plain',_charset='gb2312')  
@@ -63,10 +74,11 @@ email_pwd = config.get("email", "password")
 email_from = config.get("email", "fromAddr")
 email_to = config.get("email", "toAddr")
 
-origin_text = Query(bong_user, bong_pwd)
+cookie = GetCookie(bong_user, bong_pwd)
+origin_text = Query(cookie, bong_user, bong_pwd)
 while True:
-	time.sleep(5)
-	txt1 = Query(bong_user, bong_pwd)
+	time.sleep(30)
+	txt1 = Query(cookie, bong_user, bong_pwd)
 	if txt1 == origin_text:
 		print True
 	else:
