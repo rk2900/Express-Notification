@@ -26,6 +26,7 @@ def GetCookie(username, password):
 	h = hl.Http()
 	response,content = h.request(url,'POST',headers=headers,body=urllib.urlencode(body))
 	cookie = response['set-cookie']
+	print "======= New Cookie ========"
 	return cookie
 
 def Query(cookie, username, password):
@@ -80,6 +81,7 @@ while True:
 	time.sleep(30)
 	txt1 = Query(cookie, bong_user, bong_pwd)
 	if txt1 == origin_text:
+		print txt1
 		print True
 	else:
 		print txt1
