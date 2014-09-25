@@ -9,9 +9,6 @@ from email.mime.text import MIMEText
 import time
 import ConfigParser
 
-# noExpress = u'备货中'
-# hasExpress = u'已出库'
-
 def GetCookie(username, password):
 	url = 'https://shop.bong.cn/shop/user/login'
 	body = {'password': password, 'loginName': username}
@@ -60,7 +57,7 @@ def SendMail(status, username, password, fromAddr, toAddr):
   
     smtp = smtplib.SMTP_SSL("smtp.126.com")  
     smtp.set_debuglevel(4)  
-    smtp.login(username, password)#***为密码  
+    smtp.login(username, password)
     smtp.sendmail(fromAddr,toAddr,msg.as_string())  
     smtp.quit()
 
@@ -81,9 +78,9 @@ while True:
 	time.sleep(30)
 	txt1 = Query(cookie, bong_user, bong_pwd)
 	if txt1 == origin_text:
-		print txt1
+		#print txt1
 		print True
 	else:
-		print txt1
+		#print txt1
 		SendMail(txt1, email_user, email_pwd, email_from, email_to)
 	origin_text = txt1
