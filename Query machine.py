@@ -70,5 +70,6 @@ while True:
 	if txt1 == origin_text:
 		print True
 	else:
-		print SendMail(txt1, email_user, email_pwd, email_from, email_to)
+		print txt1
+		SendMail(txt1, email_user, email_pwd, email_from, email_to)
 	origin_text = txt1
