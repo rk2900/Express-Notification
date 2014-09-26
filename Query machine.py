@@ -89,7 +89,7 @@ origin_text = m.Query()
 while True:
 	count = count + 1
 	print count
-	time.sleep(5)
+	time.sleep(20)
 	txt1 = m.Query()
 	if txt1 == origin_text:
 		print True
