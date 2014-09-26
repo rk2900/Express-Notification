@@ -24,18 +24,18 @@ def GetCookie(username, password):
 	response = ''
 	content = ''
 	cookie = ''
+	print "Getting new cookie ..."
 	while True:
 		response,content = h.request(url,'POST',headers=headers,body=urllib.urlencode(body))
-		if reponse.has_key('set-cookie'):
+		if response.has_key('set-cookie'):
 			break
 		print 'Not get cookie, try again ...'
 	cookie = response['set-cookie']
-	print "Get new cookie."
+	print "Get new cookie. New cookie is " + cookie
 	return cookie
 
 def Query(cookie, username, password):
 	h = hl.Http()
-	# cookie = GetCookie(username, password)
 	url = 'https://shop.bong.cn/shop/user/orders'
 	headers = {'Cookie':cookie}  
 	response, content = h.request(url, 'GET', headers=headers) 
@@ -43,15 +43,13 @@ def Query(cookie, username, password):
 	state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
 	
 	while not state:
-		print 'Getting cookie'
 		cookie = GetCookie(username, password)
-		print 'cookie is ' + cookie
 		headers = {'Cookie':cookie}  
 		response, content = h.request(url, 'GET', headers=headers) 
 		soup = bs(content)
 		state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
 		txt =  state.text
-		print 'state is ' + state.text
+		# print 'state is ' + state.text # state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
 	txt =  state.text
 	return txt
 		
@@ -79,8 +77,7 @@ email_pwd = config.get("email", "password")
 email_from = config.get("email", "fromAddr")
 email_to = config.get("email", "toAddr")
 
-cookie = GetCookie(bong_user, bong_pwd)
-print "New cookie is " + cookie
+cookie = ''
 origin_text = Query(cookie, bong_user, bong_pwd)
 while True:
 	time.sleep(30)
