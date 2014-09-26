@@ -1,0 +1,9 @@
+[bong]
+username = 180XXXXXX
+password = 1234
+
+[email]
+username = XXXX@126.com
+password = 123456
+fromAddr = XXXX@126.com
+toAddr = YYYY@gmail.com
