@@ -21,9 +21,16 @@ def GetCookie(username, password):
 				'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.122 Safari/537.36',
 				'X-Requested-With':'XMLHttpRequest'}
 	h = hl.Http()
-	response,content = h.request(url,'POST',headers=headers,body=urllib.urlencode(body))
+	response = ''
+	content = ''
+	cookie = ''
+	while True:
+		response,content = h.request(url,'POST',headers=headers,body=urllib.urlencode(body))
+		if reponse.has_key('set-cookie'):
+			break
+		print 'Not get cookie, try again ...'
 	cookie = response['set-cookie']
-	print "======= New Cookie ========"
+	print "Get new cookie."
 	return cookie
 
 def Query(cookie, username, password):
@@ -73,6 +80,7 @@ email_from = config.get("email", "fromAddr")
 email_to = config.get("email", "toAddr")
 
 cookie = GetCookie(bong_user, bong_pwd)
+print "New cookie is " + cookie
 origin_text = Query(cookie, bong_user, bong_pwd)
 while True:
 	time.sleep(30)
