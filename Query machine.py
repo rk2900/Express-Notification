@@ -57,14 +57,18 @@ class Machine:
 		while True:
 			headers = {'Cookie':self.cookie}  
 			# print headers
-			self.response, self.content = h.request(url, 'GET', headers=headers) 
-			soup = bs(self.content)
-			self.state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
-			if not self.state:
-				print "Old cookie does not work, get new one."
-				self.GetCookie()
+			try:
+				self.response, self.content = h.request(url, 'GET', headers=headers) 
+			except httplib.ResponseNotReady as e:
+				print e
 			else:
-				break			
+				soup = bs(self.content)
+				self.state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
+				if not self.state:
+					print "Old cookie does not work, get new one."
+					self.GetCookie()
+				else:
+					break			
 			# txt =  self.state.text
 			# print 'state is ' + state.text # state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
 		txt =  self.state.text
