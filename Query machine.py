@@ -55,13 +55,16 @@ class Machine:
 			self.GetCookie()
 
 		while True:
-			headers = {'Cookie':self.cookie}  
-			# print headers
+			headers = {'Cookie':self.cookie}
+			
 			try:
+				print "Find if response has content..."
 				self.response, self.content = h.request(url, 'GET', headers=headers) 
 			except httplib.ResponseNotReady as e:
+				print "Had nooooooooooo response."
 				print e
 			else:
+				print "Had response."
 				soup = bs(self.content)
 				self.state = soup.find(name='li', attrs={'class':'order-state color-green os-stocking'})
 				if not self.state:
